@@ -45,10 +45,12 @@ Hay que generar otro build cuando cambian las librerías nativas, los permisos, 
 
 ### 4. Google Sign-In
 
-1. Con el primer build ya hecho, buscá la huella **SHA-1**: `npx eas-cli@latest credentials` → Android.
-2. En Firebase → **Configuración del proyecto → tu app Android → Agregar huella digital**, pegala y volvé a descargar `google-services.json`.
-3. En **Authentication → Google → Configuración del SDK web**, copiá el **ID de cliente web** en `GOOGLE_WEB_CLIENT_ID` (`src/config/firebaseConfig.js`). De ese archivo es lo único que se usa.
-4. Generá otro build.
+Conviene hacerlo antes del primer build, así alcanza con uno solo.
+
+1. Creá la firma y copiá la huella **SHA-1**: `npx eas-cli@latest credentials --platform android` → development → Keystore. No la borres: con otra firma no se puede actualizar la app instalada.
+2. En Firebase → **Configuración del proyecto → tu app Android → Agregar huella digital**, pegala.
+3. En **Authentication → Método de acceso**, habilitá **Google**.
+4. Recién ahí descargá `google-services.json`. El **ID de cliente web** es el `client_id` con `client_type: 3` de ese archivo: va en `GOOGLE_WEB_CLIENT_ID` (`src/config/firebaseConfig.js`).
 
 ### 5. APK para el grupo y actualizaciones automáticas
 

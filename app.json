@@ -56,14 +56,23 @@
             "kotlinVersion": "2.4.0"
           }
         }
-      ]
+      ],
+      "expo-font",
+      "expo-status-bar"
     ],
     "runtimeVersion": {
       "policy": "fingerprint"
     },
     "updates": {
       "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 0
-    }
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/fd133261-72d2-4957-95a4-4850487f7436"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fd133261-72d2-4957-95a4-4850487f7436"
+      }
+    },
+    "owner": "aurex"
   }
 }

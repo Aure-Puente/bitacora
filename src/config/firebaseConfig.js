@@ -11,6 +11,6 @@ export const firebaseConfig = {
 
 // ID de cliente OAuth de tipo "Web" (Firebase → Authentication → Google → Configuración del SDK web).
 // Es el que usa Google Sign-In para devolver el idToken que Firebase necesita.
-export const GOOGLE_WEB_CLIENT_ID = 'TU_WEB_CLIENT_ID.apps.googleusercontent.com';
+export const GOOGLE_WEB_CLIENT_ID = '686485695483-cb5rhrgaig3b11u42iq76ikfo7aa2t2v.apps.googleusercontent.com';
 
 export const isFirebaseConfigured = firebaseConfig.apiKey !== 'TU_API_KEY';
