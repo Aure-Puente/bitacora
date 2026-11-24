@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "Bitácora",
+    "slug": "bitacora",
+    "scheme": "bitacora",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#FAF6EE",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.bitacora.app"
+    },
+    "android": {
+      "package": "com.bitacora.app",
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "backgroundColor": "#14586B",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#FAF6EE",
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#12181C"
+          }
+        }
+      ],
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Bitácora usa tus fotos para el perfil, los tickets, los documentos y el álbum del viaje.",
+          "cameraPermission": "Bitácora usa la cámara para sacar fotos del viaje, de tickets y de documentos.",
+          "microphonePermission": false
+        }
+      ],
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "2.4.0"
+          }
+        }
+      ]
+    ],
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "updates": {
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    }
+  }
+}

@@ -1,0 +1,57 @@
+rules_version = '2';
+
+// Reglas de Firebase Storage de Bitácora.
+// La privacidad depende de la carpeta: group = todo el viaje, private = solo quien lo subió.
+// Para saber quién es integrante se consulta memberIds en Firestore.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isMe(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function isMember(tripId) {
+      return signedIn()
+        && request.auth.uid in firestore.get(/databases/(default)/documents/trips/$(tripId)).data.memberIds;
+    }
+
+    // Solo fotos JPEG (la app convierte todo) y PDF, hasta 10 MB.
+    function validFile(name) {
+      return request.resource.size > 0
+        && request.resource.size <= 10 * 1024 * 1024
+        && (
+          (request.resource.contentType == 'image/jpeg' && name.matches('[A-Za-z0-9_]+[.]jpg'))
+          || (request.resource.contentType == 'application/pdf' && name.matches('[A-Za-z0-9_]+[.]pdf'))
+        );
+    }
+
+    // Compartidos con el viaje (documentos del grupo, tickets y álbum)
+    match /trips/{tripId}/group/{uid}/{name} {
+      allow get: if isMember(tripId);
+      allow create: if isMe(uid) && isMember(tripId) && validFile(name);
+      allow delete: if isMe(uid);
+    }
+
+    // Documentos "solo yo"
+    match /trips/{tripId}/private/{uid}/{name} {
+      allow get: if isMe(uid);
+      allow create: if isMe(uid) && isMember(tripId) && validFile(name);
+      allow delete: if isMe(uid);
+    }
+
+    // Fotos de perfil: las ve cualquiera con sesión; cada uno cambia solo la suya.
+    match /avatars/{uid}/{name} {
+      allow get: if signedIn();
+      allow create: if isMe(uid)
+        && request.resource.contentType == 'image/jpeg'
+        && request.resource.size > 0
+        && request.resource.size <= 1024 * 1024
+        && name.matches('[0-9]+[.]jpg');
+      allow delete: if isMe(uid);
+    }
+  }
+}
